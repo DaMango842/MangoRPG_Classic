@@ -1,0 +1,32 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Mango RPG 主文件",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/MangoRPG.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Mango RPG(Debugger)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/debugger.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "当前文件",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
