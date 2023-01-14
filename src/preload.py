@@ -8,6 +8,9 @@ from rich.progress import (
     BarColumn,
     TextColumn,
     SpinnerColumn,
+    MofNCompleteColumn,
+    ProgressColumn,
+    TaskProgressColumn,
     TimeElapsedColumn,
     TimeRemainingColumn
     )
@@ -21,12 +24,13 @@ def preload():
         TextColumn("{task.description}"),
         BarColumn(),
         TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+        #MofNCompleteColumn(),
         TimeRemainingColumn(),
         TimeElapsedColumn()
     )
 
     with progress:
-        preloadTask1 = progress.add_task("[#005fff]加载脚本文件",total=20)
+        preloadTask1 = progress.add_task("[#005fff]加载脚本文件",total=22)
         preloadTask2 = progress.add_task("[#ff0000]加载资源文件",total=1)
     
         while not progress.finished:

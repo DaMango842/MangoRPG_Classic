@@ -1,15 +1,20 @@
+from src.system import System
+from src.quest.questSystem import *
+from src.inventory import Inventory
+import random
+import os
+import sys
 
-
-class Character():
-
-    def __init__(self,_name:str,_lv:int,_hp:float,_atk:int,_def:int,_money:int,_exp:int):
-        self.Name = _name
-        self.Lv = _lv
-        self.Hp = _hp
-        self.Atk = _atk
-        self.Def = _def
-        self.Money = _money
-        self.Exp = _exp
+from pygame import mixer
+from rich import print
+from rich.panel import Panel
+from rich.text import Text
+from rich.table import Table
+from rich.console import Group
+from rich.console import Console 
+from rich.traceback import install
+install(show_locals=True)
+console=Console()
 
 
 

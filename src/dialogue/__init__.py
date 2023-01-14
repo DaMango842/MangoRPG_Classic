@@ -22,7 +22,10 @@ class Dialogue():
         if text == "":
             raise TextError("内容不能为空!")
         for char in text:
-            print(char)
+            print(
+                char,
+                end=""
+                )
             sleep(speed) 
     # def __init__():
     #     pass

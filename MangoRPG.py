@@ -3,6 +3,7 @@ from src.gui import Gui
 from src.system import System
 from src.item import *
 from src.game import Game
+from src.preload import preload
 #导入的模块
 import os
 from pygame import mixer
@@ -18,10 +19,12 @@ def main():
     #加载Logo?
     Game.TitleLogo()
     #模仿游戏加载进度速度
-    System.Sleep(5.5)
-    System.Clear()
+    preload()
+    System.Sleep(2.5)
     #pygame音频初始化
     mixer.init()
+    #清屏
+    System.Clear()
     #游戏标题界面
     Game.Title()
 

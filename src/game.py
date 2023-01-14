@@ -4,51 +4,55 @@ import sys
 import time
 import cmd
 import textwrap
-from enum import Enum
 from pygame import mixer
 from rich.console import Console
+from rich.console import Group
+from rich.panel import Panel
+from rich.text import Text
 from rich.traceback import install
 install(show_locals=True)
 
-
-#
-from storys.storyPrologue import Prologue
+from stories.storyPrologue import Prologue
 from src.character.player import *
 from src.version import *
 from src.exception import *
 from src.dialogue import Dialogue
 from src.dialogue import DialogueRich
+from src.shop.buyShop import *
+from src.shop.sellShop import *
 from battle import *
 
-
-
 console = Console()
-
-class StartType(Enum):
-    START = 1
-    LOAD = 2
 
 class Game():
     def __init__(self):
         pass
 
-    # 用法:
-    # Game.TitleLogo()
     def TitleLogo(): 
-        # ---------------------------------------------
-        # -         Mango RPG(0.1.0 Alpha)            -
-        # -     (C) 2022 ~ 2023 黑夜下的糖果酱         -
-        # ---------------------------------------------
-        System.Write(" ")
-        console.print(f"Mango RPG({versionStr})",end="",style="#ffffff",justify="center")
-        console.print(f"(C) 2022 ~ 2023 黑夜下的糖果酱",end="",justify="center")
-        System.Write(" ")
+        textLogo = Text(justify="center")
+        textLogo.append("MangoRPG (")
+        textLogo.append(f"{versionStr}",style="#00afff")
+        textLogo.append(")")
+        TEXT_GROUP = Group(
+            textLogo,
+            Text("(C) 2022 ~ 2023 黑夜下的糖果酱",justify="center"),
+        )
+
+        LOGO_PANEL = Panel(TEXT_GROUP,title="Mango RPG")
+        console.print(LOGO_PANEL)
 
     def TitleLogo_Debug():
-        print(" ----------------------------- ")
-        print(" -      Mango RPG(Debug)     - ")
-        print(" (C) 2022 ~ 2023 黑夜下的糖果酱 ")
-        print(" ----------------------------- ")
+        textLogo = Text(justify="center")
+        textLogo.append("MangoRPG (")
+        textLogo.append(f"Debug",style="#ff0f0f")
+        textLogo.append(")")
+        TEXT_GROUP = Group(
+            textLogo,
+            Text("(C) 2022 ~ 2023 黑夜下的糖果酱",justify="center"),
+        )
+
+        LOGO_PANEL = Panel(TEXT_GROUP,title="Mango RPG")
+        console.print(LOGO_PANEL)
     
     title:str = "Mango RPG"
     version:str = versionStr
@@ -57,27 +61,27 @@ class Game():
     # 用法:
     # Game.Title()            
     def Title():
-        System.Clear()
-        System.Write(" ")
-        for prefix in range(0,57):
-            System.Write("-")
-            prefix += 1
-        System.Write("\n")    
-        print(f" -                {Game.title}({Game.version})                 - ")
-        print("             (C) 2022 - 2023 黑夜下的糖果酱                    ")
-        System.Write(" ")
-        for middle in range(0,57):
-            System.Write("-")
-            middle += 1 
-        print("                                                          ")
-        print("      [S]Start     [L]Load    [N]Settings     [Q]Exit        ")
-        print("                                                          ")
-        System.Write(" ")
-        for suffix in range(0,57):
-            System.Write("-")
-            suffix += 1    
-        print("")
-        System.Write("\n")
+        textTitle = Text(justify="center")
+        textTitle.append(f"{Game.title} ")
+        textTitle.append("(")
+        textTitle.append(f"{Game.version}")
+        textTitle.append(")")
+        text2Title = Text(justify="center")
+        text2Title.append("(C) ")
+        text2Title.append("2022 ")
+        text2Title.append("~ ")
+        text2Title.append("2023 ")
+        text2Title.append("黑夜下的糖果酱")
+        TITLE_GROUP = Group(
+            textTitle,
+            text2Title,
+            Text("",justify="center"),
+            Text("",justify="center"),
+            Text("[S]Start    [L]Load    [N]Settings    [Q]Exit",justify="center"),
+            Text("",justify="center"),
+        )
+        TITLE_PANEL = Panel(TITLE_GROUP,title="Mango RPG")
+        console.print(TITLE_PANEL)
         option = input("-> ")
         while (True):
             if option in ['start','Start','START']:
@@ -89,7 +93,7 @@ class Game():
                 input("> ")
                 Game.Title()
             elif option in ['exit','Exit','EXIT','quit','Quit','QUIT']:
-                System.Exit(0)
+                sys.exit(0)
             else:
                 print("请输入一个正确的命令")
                 Game.Title()
@@ -128,7 +132,9 @@ class Game():
                     pass
                 except Exception as e:
                     raise GameError(f"错误:读取存档时出错!   {e}")
-                  
+            else:
+                print("错误! 无法找到存档,已为你重新开始")
+                Game.Start("playing")      
             if player.Name == "":
                 Dialogue("","输入你的新名字",0.25)
                 player=Player.enterPlayerName()
@@ -139,23 +145,29 @@ class Game():
             if(Game.isPrologueSeen == False):
                 Prologue()
                 Game.isPrologueSeen = True
-                player = Player("",0,1,1,0,0,0,0,0,0,0,0,10)    
+                player = Player("",0,1,1,0,0,0,0,0,0,0,0,10)
+                System.Clear()    
             if(player.Name == ""):
                 Dialogue("","输入你的新名字",0.25)
                 player=Player.enterPlayerName()
+                System.Clear()
             else:
                 pass
 
             while(player.gameOver != True):
-                System.Clear()
+                console.clear(True)
                 if (player.Hp <= 0):
                     player.gameOver = True
                     player.GameOver()
                     return
-                print("------ 菜单 ------")
-                print(" [C]探索 ")
-                print(" [M]商店 ")
-                print("--(B)状态--(I)背包--(S)保存--(P)任务--(Q)退出--")
+                    
+                textMenuGroup = Group(
+                    Text(" [C]探索 "),
+                    Text(" [M]商店 "),
+                    Text("--(B)状态--(I)背包--(S)保存--(P)任务--(Q)退出--")
+                )
+                textMenuPanel = Panel(textMenuGroup,title="菜单",subtitle=None)
+                console.print(textMenuPanel)
                 option = input("-> ")
                 if option in ['探索','c','C']:
                     print("由于某些原因,探索暂不开放")
@@ -169,13 +181,21 @@ class Game():
                 elif option in ['背包','i','I','inventory','Inventory','INVENTORY']:
                     player.openInventory()
                 elif option in ['状态','b','B','stats','Stats','STATS']:
+                    console.clear(True)
                     player.playerStats()
                 elif option in ['保存','s','S','save','Save','SAVE']:
                     player.saveGame()
                 elif option in ['商店','m','M','shop','Shop','SHOP']:
-                    pass
+                    soption = input("选择商店类型")
+                    if soption in ['购买','buy','Buy']:
+                        BuyShop().Open(player)
+                    elif soption in ['收购','sell','Sell']:
+                        SellShop().Open(player)
+                    else:
+                        print("")    
+                        
                 elif option in ['退出','q','Q','exit','Exit','EXIT','quit','Quit','QUIT']:
-                    System.Exit(0)
+                    sys.exit(0)
                 else:
                     print("请输入正确的命令")
 

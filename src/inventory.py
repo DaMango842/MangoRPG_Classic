@@ -13,8 +13,6 @@ class Inventory():
     def addItem(self,item:Item):
         if (len(self.__inventory) < self.__size):
             self.__inventory.append(item)
-    
-    
 
     def showInventory(self):
         print("--------------------背包--------------------")

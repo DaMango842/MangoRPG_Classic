@@ -1,6 +1,6 @@
 from enum import Enum
-
 #------------我只是个占位符------------
+from src.system import System
 from src.item import *
 
 class QuestType(Enum):

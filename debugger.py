@@ -17,6 +17,7 @@ from pygame import mixer
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from rich.traceback import install
 install(show_locals=True)
+
 #调试变量(请勿删除)
 DEBUGGER = True
 #主程序
