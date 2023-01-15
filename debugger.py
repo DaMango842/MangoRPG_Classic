@@ -5,13 +5,9 @@
 # 测试相关的东西
 # 见谅
 ##################################################################
-from src.gui import Gui
-from src.system import System
-from src.dialogue import DialogueRich
-from src.item import *
-from src.game import Game
-from src.quest.questSystem import *
-from src.preload import preload
+from MangoRPG.game import Game
+from MangoRPG.preload import preload
+from MangoRPG.system import System
 import os
 from pygame import mixer
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"

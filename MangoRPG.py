@@ -1,9 +1,9 @@
 #<------------我只是个占位符------------>
-from src.gui import Gui
-from src.system import System
-from src.item import *
-from src.game import Game
-from src.preload import preload
+from MangoRPG.gui import Gui
+from MangoRPG.system import System
+from MangoRPG.items import *
+from MangoRPG.game import Game
+from MangoRPG.preload import preload
 #导入的模块
 import os
 from pygame import mixer
