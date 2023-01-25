@@ -12,8 +12,6 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from rich.traceback import install
 install(show_locals=True)
 
-# will be updated python 3.11 soon
-
 def main():   
     #player = Player("test",1,100,100,0,0,10,10,0,0,10)
     #加载Logo?

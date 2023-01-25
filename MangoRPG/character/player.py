@@ -1,9 +1,11 @@
 import sys
 import random
+import numpy as np
 
 from MangoRPG.character import *
-from MangoRPG.inventory import *
-from MangoRPG.quest.questSystem import *
+from MangoRPG.inventory import Inventory
+from MangoRPG.quest.questSystem import QuestSystem
+
 
 class Player():
     # 定义方法:
@@ -11,18 +13,19 @@ class Player():
     def __init__(
         self,
         _name: str,
-        _lv: int=0,
-        _hp: float=0,
-        _hpMax: float=0,
-        _mana: int=0,
-        _manaMax: int=0,
-        _atk: int=0,
-        _def: int=0,
-        _matk: int=0,
-        _mdef: int=0,
-        _money: int=0,
-        _exp: int=0,
-        _nextExp: int=0
+        _career: str | None = "",
+        _lv: int = 0,
+        _hp: float = 0,
+        _hpMax: float = 0,
+        _mana: float = 0,
+        _manaMax: float = 0,
+        _atk: int = 0,
+        _def: int = 0,
+        _matk: int = 0,
+        _mdef: int = 0,
+        _money: int = 0,
+        _exp: int = 0,
+        _nextExp: int = 0
     ):
         self.Name = _name
         self.Lv = _lv
@@ -37,27 +40,36 @@ class Player():
         self.Money = _money
         self.Exp = _exp
         self.nextExp = _nextExp
+        # 职业
+        self.career = _career
+        # 身份
+        # self.identity = ""
+        self.defeatEnemies = 0
         # 初始化玩家背包
         self.Inventory = Inventory()
         # 初始化玩家的任务列表
         self.Quest = QuestSystem()
         # 当前武器(当里面为无,则无装备武器)
-        self.currWeapon = ["无", "无"]
+        self.currWeapon = ["破旧木剑"]
         # 当前防具(如果当前为无,则无装备防具)
-        self.currArmor = ["无", "无", "无", "无"]
+        self.currArmor = ["破旧衣服"]
 
-        # self.teamList = [
-            
-        # ]
-
+        self.trainerWon: bool = False
+        self.isSeenPrologue: bool = False
+        # 游戏结束开关
         self.gameOver: bool = False
-    # 使用方法:
-    # Player.playerStats()
-    # player.playerStats()
 
+    def setNewCareer(self, name):
+        self.career = name
+        return self.career
+
+    # 使用方法:
+    # player.playerStats()
     def playerStats(self):
         pStatsTable = Table()
         pStatsTable.add_column("名称", justify="center")
+        pStatsTable.add_column("职业", justify="center")
+        # pStatsTable.add_column("名称", justify="center")
         pStatsTable.add_column("等级", justify="center")
         pStatsTable.add_column("生命", justify="center")
         pStatsTable.add_column("Mana", justify="center")
@@ -69,6 +81,7 @@ class Player():
         pStatsTable.add_column("经验", justify="center")
         pStatsTable.add_row(
             f"{self.Name}",
+            f"{self.career}",
             f"{self.Lv}",
             f"{self.Hp} / {self.HpMax}",
             f"{self.Mana} / {self.ManaMax}",
@@ -79,63 +92,89 @@ class Player():
             f"{self.Money}",
             f"{self.Exp} / {self.nextExp}",
         )
-        console.print(Panel(pStatsTable,title="成员"), justify="center")
+        pStatsTable2 = Table()
+        pStatsTable2.add_column("当前武器", justify="center")
+        pStatsTable2.add_column("当前防具", justify="center")
+        if len(self.currWeapon) >= 1 and len(self.currArmor) >= 1 and not "[]":
+            for i,j in self.currWeapon,self.currArmor:
+                pStatsTable2.add_row(
+                    f"{self.currWeapon[i]}",
+                    f"{self.currArmor[j]}"
+                )
+        else:
+            pStatsTable2.add_row(
+                "无",
+                "无"
+            )        
+        console.print(Panel(pStatsTable, title="成员"), justify="center")
+        console.print(Panel(pStatsTable2, title="成员装备"), justify="center")
+        console.print(Panel(f"击败敌人数: {self.defeatEnemies}"), justify="center")
         input("> ")
     # 使用方法：
-    # Player.GameOver()
     # player.GameOver()
-
     def GameOver(self):
         console.clear()
         print("游戏结束!")
         input()
         sys.exit(1)
-        # if (self.Hp > 0):
-        #     pass
-        # else:
-        #     System.Clear()
-        #     print("游戏结束!")
-        #     input()
-        #     sys.exit(1)
     # 使用方法:
-    # Player.levelUp() #需要放到战斗中判定或者在任务中判定
     # player.levelUp()
-
     def levelUp(self):
-        if (self.Exp > self.nextExp):
+        if (self.Exp >= self.nextExp):
+            # 扣除当前经验值
             self.Exp -= self.nextExp
-            self.nextExp *= random.randint(0, 10)
-            print("恭喜升级!\n")
-            print(f"下个等级所需经验: {self.nextExp}")
+            # 增加等级
+            self.Lv += 1
+            # 增幅属性(血量上限,攻击,防御,魔攻,魔防)
+            self.HpMax += (np.random.randint(1,100) - (self.Lv*4))
+            if self.ManaMax != 0:
+                self.ManaMax += (np.random.randint(1,50) * 2 - (self.Lv*4))
+            self.Atk += (np.random.randint(1,15) * 2 - (self.Lv*2))
+            self.Def += (np.random.randint(1,15) * 2 - (self.Lv*2))
+            self.Matk += (np.random.randint(1,15) * 2 - (self.Lv*6))
+            self.Mdef += (np.random.randint(1,15) * 2 - (self.Lv*6))
+            # 计算下个等级所需经验
+            self.nextExp *= (np.random.randint(1,10) - (self.Lv*2))
+            print(f"恭喜升级!\n你现在的等级为Lv.{self.Lv}")
+            self.Hp = self.HpMax
+            if self.ManaMax != 0:
+                self.Mana = self.ManaMax
+            else:
+                pass    
+            if self.Matk < 0:
+                self.Matk = 0
+            if self.Mdef < 0:
+                self.Mdef = 0    
+            print(f"下个等级所需经验: {self.nextExp - self.Exp}")
         else:
-            print(f"下个等级所需经验: {self.nextExp}")
+            print(f"下个等级所需经验: {self.nextExp - self.Exp}")
+        input()
     # 使用方法:
-    # Player.enterPlayerName()
     # player.enterPlayerName()
-
     def enterPlayerName():
         # 在这行中,你必须输入你的玩家名
         Name = input("-> ")
         # 这里进行名字判定,如果为空,则使用固定名称
         # 否则则是你输入的名称
-        if (Name != ""):
+        if Name != "":
             name = Name
         else:
             name = "Mango"
         # 在这个位置修改除了name之外的参数
         # 不能修改name这个值(因为name = 你输入的名字)
-        return Player(name, 1, 100, 100, 0, 0, 10, 10, 0, 0, 0, 0, 10)
+        return Player(name, "无", 1, 100, 100, 0, 0, 10, 10, 0, 0, 200, 0, 10)
     # 使用方法:
-    # Player.openInventory()
     # player.openInventory()
-
     def openInventory(self):
         self.Inventory.showInventory()
         return
     # 使用方法:
-    # Player.saveGame()
+    # player.openQuestMenu()
+    def openQuestMenu(self):
+        self.Quest.showQuestList()
+        return
+    # 使用方法:
     # player.saveGame() #需要创建变量 = Player()
-
     def saveGame(self):
         s = self.Name+'\n'+str(self.Lv)+'\n'
         s += str(self.Hp)+'\n'+str(self.HpMax)+'\n' + \
@@ -143,26 +182,14 @@ class Player():
         s += str(self.Atk)+'\n'+str(self.Def)+'\n' + \
             str(self.Matk)+'\n'+str(self.Mdef)+'\n'
         s += str(self.Money)+'\n'+str(self.Exp)+'\n'+str(self.nextExp)+'\n'
-        s += str(self.currWeapon[1])+'\n'+str(self.currArmor[3])
+        s += str(self.currWeapon)+'\n'+str(self.currArmor)+'\n'
+        s += str(self.career)+'\n'+str(0)+'\n'+str(0)+'\n'
+        s += str(self.defeatEnemies)+'\n'
+        s += str(self.trainerWon)+'\n'
+        s += str(self.isSeenPrologue)
         with open('player.save', 'w', encoding="utf-8") as f:
             f.write(s)
-        print("存档已记录完成!")
 
-    # def stats():
-        # print("------------------------------------------")
-        # print(f"名称: {self.Name}")
-        # print(f"等级: {self.Lv}")
-        # print("生命: %d / %d" % (self.Hp, self.HpMax))
-        # print("Mana: %d / %d" % (self.Mana, self.ManaMax))
-        # print("------------------------------------------")
-        # print(f"攻击: {self.Atk}")
-        # print(f"防御: {self.Def}")
-        # print(f"魔攻: {self.Matk}")
-        # print(f"魔防: {self.Mdef}")
-        # print("------------------------------------------")
-        # print(f"当前武器: {self.currWeapon[1]}")
-        # print(f"当前装备: {self.currArmor[3]}")
-        # print("------------------------------------------")
-        # print(f"金钱: {self.Money}")
-        # print("经验: %d / %d" % (self.Exp, self.nextExp))
-        # print("------------------------------------------")
+        print("存档已记录完成!")
+    def test():
+        pass

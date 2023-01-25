@@ -6,6 +6,7 @@
 # 见谅
 ##################################################################
 from MangoRPG.game import Game
+from MangoRPG.dialogue import *
 from MangoRPG.preload import preload
 from MangoRPG.system import System
 import os
@@ -23,10 +24,11 @@ def main_debug():
     else:
         Game.TitleLogo()    
     #模仿游戏加载进度速度
-    preload()
+    #preload()
 
     System.Sleep(2.5)
     #System.Clear()
+    DialogueLog("Hello!","#ffffff",0.15)
     #DialogueRich("Mango","","#ff1500","#ffffff",0.15)
     #System.DialogueRich("Mango","test","#ff1500","#ffffff",0.15)
     #mixer.init()

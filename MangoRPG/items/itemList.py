@@ -1,26 +1,22 @@
+from MangoRPG.enumerates import ItemType
+from MangoRPG.meta.loadmetaData import loadItemMetaData
+from MangoRPG.items import *
 
+item = loadItemMetaData()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#mIconn = sqlite3.connect('database\\item.db')
-#mIc = mIconn.cursor()
-
-#Item1array = mIconn.execute('SELECT * FROM company where name = "破旧木剑"')
-#Item1rows = Item1array.fetchall()
+TestItem = Item(
+    999,
+    "测试物品",
+    4,
+    "就只是用来测试的",
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+)

@@ -1,10 +1,13 @@
 # 本身不需要character类
 # 所以import暂时没必要...(除了物品)
 # from src.character import *
-from MangoRPG.items import *
+from MangoRPG.items.weaponList import *
+from MangoRPG.items.armorList import *
+from MangoRPG.items.itemList import *
+
 
 class Enemy():
-    
+
     def __init__(
         self,
         _name,
@@ -14,7 +17,9 @@ class Enemy():
         _atk,
         _def,
         _money,
-        _exp
+        _exp,
+        dropItem: Item | None,
+        isBoss: bool
     ):
         self.Name = _name
         self.Lv = _lv
@@ -24,4 +29,6 @@ class Enemy():
         self.Def = _def
         self.Money = _money
         self.Exp = _exp
-        self.dropItem = []
+        self.dropItem = dropItem
+        # 是否为boss
+        self.isBoss: isBoss

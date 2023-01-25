@@ -1,6 +1,102 @@
-[
-    // test
-    {
-
+{
+    "weapon": {
+        "0": {
+            "id": 1,
+            "name": "破旧木剑",
+            "type": 1,
+            "desc": "一把很破旧的剑,虽然不知道已经是什么来头了",
+            "price": 10,
+            "sellPrice": 5,
+            "Lv": 1,
+            "Hp": 0,
+            "Mana": 0,
+            "Atk": 2,
+            "Def": 0,
+            "Matk": 0,
+            "Mdef": 0,
+            "amount": 1
+        },
+        "1": {
+            "id": 2,
+            "name": "修复好的木剑",
+            "type": 1,
+            "desc": "被铁匠修复好的剑,虽然相比之前的那把剑,但总比没有的好",
+            "price": 10,
+            "sellPrice": 5,
+            "Lv": 1,
+            "Hp": 0,
+            "Mana": 0,
+            "Atk": 4,
+            "Def": 0,
+            "Matk": 0,
+            "Mdef": 0,
+            "amount": 1
+        },
+        "2": {
+            "id": 3,
+            "name": "新手长剑",
+            "type": 1,
+            "desc": "你的第一把武器!虽然感觉哪里怪怪的,但你终于能拥有这把真正的武器了!",
+            "price": 30,
+            "sellPrice": 10,
+            "Lv": 2,
+            "Hp": 0,
+            "Mana": 0,
+            "Atk": 8,
+            "Def": 0,
+            "Matk": 0,
+            "Mdef": 0,
+            "amount": 1
+        },
+        "3": {
+            "id": 4,
+            "name": "精致铁剑",
+            "type": 1,
+            "desc": "由铁匠打造的剑,这把剑可比那些破木剑好多了。",
+            "price": 50,
+            "sellPrice": 30,
+            "Lv": 2,
+            "Hp": 0,
+            "Mana": 0,
+            "Atk": 14,
+            "Def": 6,
+            "Matk": 0,
+            "Mdef": 0,
+            "amount": 1
+        }
+    },
+    "armor": {
+        "0": {
+            "id": 1001,
+            "name": "破旧衣服",
+            "type": 2,
+            "desc": "普通农民才会穿的衣服...",
+            "price": 2,
+            "sellPrice": 0,
+            "Lv": 1,
+            "Hp": 2,
+            "Mana": 0,
+            "Atk": 0,
+            "Def": 2,
+            "Matk": 0,
+            "Mdef": 0,
+            "amount": 1
+        },
+        "1": {
+            "id": 1002,
+            "name": "皮革衣",
+            "type": 2,
+            "desc": "...不做评价。",
+            "price": 4,
+            "sellPrice": 2,
+            "Lv": 1,
+            "Hp": 4,
+            "Mana": 0,
+            "Atk": 0,
+            "Def": 4,
+            "Matk": 0,
+            "Mdef": 0,
+            "amount": 1
+        }
     }
-]
+}

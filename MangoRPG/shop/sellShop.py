@@ -1,13 +1,15 @@
-from MangoRPG.character.player import *
-from MangoRPG.items import *
+#from MangoRPG.character.player import *
+from MangoRPG.items.weaponList import *
+from MangoRPG.items.armorList import *
+from MangoRPG.items.itemList import *
 from MangoRPG.shop import *
 from MangoRPG.exception import *
 
-class SellShop():
+class SellShop(Shop):
     def __init__(self):
         self.__shopList = [
-            Old_Wooden_Sword,
-            Old_Leather_Clothes
+            Old_WoodenSword,
+            Old_LeatherClothes
         ]
         self.itemAmount = 0
 
@@ -21,13 +23,13 @@ class SellShop():
         if (item.amount >= 0):
             self.itemAmount -= 1
 
-    def sell(self, item:Item,who:Player):
-        if (item in who.Inventory.__inventory):
-            who.Money += item.price
-            who.Inventory.__inventory.remove(item)
-            self.itemAmount += 1
-        else:
-            print("所指定的物品不合法!")    
+    # def sell(self, item:Item,who):
+    #     if (item in who.Inventory.__inventory):
+    #         who.Money += item.price
+    #         who.Inventory.__inventory.remove(item)
+    #         self.itemAmount += 1
+    #     else:
+    #         print("所指定的物品不合法!")    
                     
 
     def Open(self, who):

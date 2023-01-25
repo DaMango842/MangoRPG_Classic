@@ -12,6 +12,12 @@
 - pygame
 - rich
 
+注: python 3.11用户请用
+```bat
+pip install pygame --pre
+``` 
+安装pygame
+
 安装依赖:
 ```bat
 pip install -r requirements.txt
@@ -57,6 +63,7 @@ DialogueRich("test","Hello,world",None,None,0.12)
 未完成的计划:
 - [ ] 任务系统
 - [ ] 商店系统
+- [ ] 地图系统
 - [ ] 探索系统
 - [ ] 副本系统
 - [ ] 多角色系统
@@ -65,6 +72,10 @@ DialogueRich("test","Hello,world",None,None,0.12)
 - [ ] 第二版任务系统
 - [ ] 第二版商店系统
 - [ ] 第二版探索系统
+
+未完成但是却在进行中:
+- [ ] 数据储存(json)
+- [ ] 数据储存(database)
 
 
 ### 底部信息

@@ -1,12 +1,15 @@
-from MangoRPG.items import *
+from MangoRPG.items.weaponList import *
+from MangoRPG.items.armorList import *
+from MangoRPG.items.itemList import *
+from MangoRPG.character.player import Player
 from MangoRPG.shop import *
 from MangoRPG.exception import *
 
-class BuyShop():
+class BuyShop(Shop):
     def __init__(self):
         self.__shopList = [
-            Old_Wooden_Sword,
-            Old_Leather_Clothes
+            Old_WoodenSword,
+            Old_LeatherClothes
         ]
         self.itemAmount = 0
 
@@ -19,6 +22,19 @@ class BuyShop():
         self.__shopList.remove(item)
         if (item.amount >= 0):
             self.itemAmount -= 1
+
+    def buyItem(self,who:Player,item:Item):
+        if item in self.__shopList and item.amount >= 1:
+            if len(who.Inventory.__inventory) > len(who.Inventory.__size):
+                print("无法购买物品: 背包已满!")
+            else:
+                who.Inventory.addItem(item)
+                item.amount -= 1
+                print(f"已购买{item.name}")
+        else:
+            print("无法购买物品! 商店已售完或者未补货")            
+
+
 
     def Open(self, who):
         if (len(self.__shopList) > 0):
