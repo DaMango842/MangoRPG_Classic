@@ -22,8 +22,8 @@ class Quest(object):
         self.Maxcount = MaxKcount
         self.progress = progress
 
-Quest1 = Quest(1,"测试任务","任务介绍测试",1,100,10,TestItem,None,None)
-Quest2 = Quest(2,"测试任务","任务介绍测试",1,100,10,TestItem,None,None)
+Quest1 = Quest(1,"测试任务","任务介绍测试",1,100,10,None,None,None)
+Quest2 = Quest(2,"测试任务","任务介绍测试",1,100,10,None,None,None)
 QuestNoItem = Quest(200,"测试任务","任务介绍测试",1,100,10,None,None,None)
 
 

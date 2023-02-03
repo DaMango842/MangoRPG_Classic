@@ -45,8 +45,8 @@ return Player(...)行
 ```
 使用新对话功能
 ```python
-#从src.dialogue 中导入 Dialogue或DialogueRich
-from src.dialogue import DialogueRich
+#从MangoRPG.dialogue 中导入 Dialogue或DialogueRich
+from MangoRPG.dialogue import DialogueRich
 #然后使用下面的内容
 DialogueRich("test","Hello,world",None,None,0.12)
 ```

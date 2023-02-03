@@ -7,7 +7,7 @@ from MangoRPG.inventory import Inventory
 from MangoRPG.quest.questSystem import QuestSystem
 
 
-class Player():
+class Player(object):
     # 定义方法:
     # player = Player("Player Name",1,100,100,0,0,10,10,0,0,10)
     def __init__(
@@ -50,9 +50,9 @@ class Player():
         # 初始化玩家的任务列表
         self.Quest = QuestSystem()
         # 当前武器(当里面为无,则无装备武器)
-        self.currWeapon = ["破旧木剑"]
+        self.currWeapon = "破旧木剑"
         # 当前防具(如果当前为无,则无装备防具)
-        self.currArmor = ["破旧衣服"]
+        self.currArmor = "破旧衣服"
 
         self.trainerWon: bool = False
         self.isSeenPrologue: bool = False
@@ -165,8 +165,8 @@ class Player():
         return Player(name, "无", 1, 100, 100, 0, 0, 10, 10, 0, 0, 200, 0, 10)
     # 使用方法:
     # player.openInventory()
-    def openInventory(self):
-        self.Inventory.showInventory()
+    def openInventory(self,who):
+        self.Inventory.showInventory(who)
         return
     # 使用方法:
     # player.openQuestMenu()

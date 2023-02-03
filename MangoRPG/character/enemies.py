@@ -6,7 +6,7 @@ from MangoRPG.items.armorList import *
 from MangoRPG.items.itemList import *
 
 
-class Enemy():
+class Enemy(object):
 
     def __init__(
         self,

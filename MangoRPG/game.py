@@ -175,7 +175,7 @@ class Game():
                 elif option in ['任务', 'p', 'P', 'quest', 'Quest', 'QUEST']:
                     player.openQuestMenu()
                 elif option in ['背包', 'i', 'I', 'inventory', 'Inventory', 'INVENTORY']:
-                    player.openInventory()
+                    player.openInventory(player)
                 elif option in ['状态', 'b', 'B', 'stats', 'Stats', 'STATS']:
                     console.clear(True)
                     player.playerStats()

@@ -61,10 +61,8 @@ class DialogueRich():
 class DialogueLog():
     # 对话系统,但带日志
     # 使用方法:
-    # System.DialogueRich("test","Hello,world",None,None,0.12)
-    # name为当前对话的'角色'名称
+    # System.DialogueRich("Hello,world",None,0.12)
     # text为当前对话的文本
-    # nameStyle为当前对话'角色'名称的样式(如果名字为空,则nameStyle也为空)
     # textStyle为当前对话文本的样式
     # speed为当前文本中每一个字的速度
     def __init__(
