@@ -1,4 +1,0 @@
-pygame=2.1.2
-rich
-pygments
-commonmark
