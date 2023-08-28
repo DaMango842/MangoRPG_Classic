@@ -2,11 +2,13 @@
 from rich.console import Console
 import pygame
 
+from MangoAPI.dialogue import Dialogue
+
 console = Console()
 
 def main():
     
-    console.print("hi")
+    Dialogue("","Hello world!!!!!!",None,None,0.25)
     
     
     
